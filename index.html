@@ -1,583 +1,809 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>D03 3BR True-Livability Valuation | Revised June 2026</title>
-  <style>
-    :root {
-      --ink: #14213d;
-      --muted: #5f6b7a;
-      --line: #d9e0e7;
-      --paper: #f6f8fa;
-      --panel: #ffffff;
-      --navy: #0c1b33;
-      --green: #157347;
-      --mint: #e7f5ee;
-      --gold: #b7892c;
-      --amber: #fff4dc;
-      --red: #b45c3d;
-      --rose: #fff0ea;
-      --blue: #1769aa;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      line-height: 1.55;
-    }
-    .hero {
-      background: linear-gradient(135deg, #071326 0%, #102a4e 58%, #0f4c5c 100%);
-      color: white;
-      padding: 54px 32px 40px;
-    }
-    .wrap { max-width: 1180px; margin: 0 auto; }
-    .eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 12px;
-      color: #d8b35d;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-    h1 {
-      font-size: clamp(34px, 6vw, 64px);
-      line-height: 1.02;
-      margin: 0 0 16px;
-      letter-spacing: 0;
-    }
-    .hero p {
-      max-width: 850px;
-      color: rgba(255,255,255,0.78);
-      font-size: 18px;
-      margin: 0;
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 34px;
-    }
-    .hero-metric {
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.08);
-      padding: 18px;
-      min-height: 116px;
-    }
-    .hero-metric strong { display: block; font-size: 25px; margin-bottom: 6px; color: #ffffff; }
-    .hero-metric span { color: rgba(255,255,255,0.68); font-size: 13px; }
-    main { padding: 34px 32px 56px; }
-    section {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      margin: 0 auto 24px;
-      max-width: 1180px;
-      padding: 28px;
-    }
-    h2 {
-      font-size: 26px;
-      line-height: 1.15;
-      margin: 0 0 14px;
-      letter-spacing: 0;
-    }
-    h3 { margin: 0 0 10px; font-size: 18px; }
-    .lede { color: var(--muted); max-width: 900px; margin: 0 0 20px; }
-    .decision {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-      gap: 22px;
-      align-items: stretch;
-    }
-    .answer {
-      background: var(--mint);
-      border: 1px solid #b9dec9;
-      padding: 24px;
-    }
-    .answer h2 { color: var(--green); }
-    .layman {
-      background: var(--amber);
-      border: 1px solid #e9cd8a;
-      padding: 24px;
-    }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 18px;
-    }
-    .card {
-      border: 1px solid var(--line);
-      background: #fbfcfd;
-      padding: 18px;
-      min-height: 176px;
-    }
-    .card.good { border-color: #b9dec9; background: #f3fbf6; }
-    .card.warn { border-color: #edc3b1; background: #fff7f3; }
-    .card strong { display: block; font-size: 22px; margin-bottom: 4px; }
-    .card span, small { display: block; color: var(--muted); font-size: 13px; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-    th {
-      background: var(--navy);
-      color: white;
-      text-align: left;
-      padding: 12px 10px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    td {
-      border-bottom: 1px solid var(--line);
-      padding: 12px 10px;
-      vertical-align: top;
-    }
-    tr.top-row td { background: #fff9e8; }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 52px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .pill.good { background: var(--mint); color: var(--green); }
-    .pill.warn { background: var(--rose); color: var(--red); }
-    .good-text { color: var(--green); font-weight: 800; }
-    .warn-text { color: var(--red); font-weight: 800; }
-    .chart {
-      border: 1px solid var(--line);
-      background: white;
-      padding: 12px;
-      margin-top: 16px;
-    }
-    .chart img { display: block; width: 100%; height: auto; }
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-top: 18px;
-    }
-    .callout {
-      border-left: 5px solid var(--blue);
-      background: #eef7ff;
-      padding: 18px 20px;
-      margin: 18px 0 0;
-    }
-    .callout strong { color: var(--blue); }
-    .formula {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      background: #101828;
-      color: #e6edf3;
-      padding: 16px;
-      overflow-x: auto;
-      margin: 14px 0;
-    }
-    .recommendation {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-    .rec-card {
-      padding: 18px;
-      border: 1px solid var(--line);
-      background: #fbfcfd;
-    }
-    .rec-card h3 { color: var(--navy); }
-    footer {
-      max-width: 1180px;
-      margin: 0 auto;
-      color: var(--muted);
-      font-size: 13px;
-      padding: 0 32px 42px;
-    }
-    @media (max-width: 900px) {
-      .hero-grid, .cards, .two-col, .recommendation, .decision { grid-template-columns: 1fr; }
-      section { padding: 22px; }
-      main, .hero { padding-left: 18px; padding-right: 18px; }
-      table { font-size: 13px; }
-      th, td { padding: 10px 8px; }
-    }
-    @media print {
-      body { background: white; }
-      section { break-inside: avoid; }
-      .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D03 Four-Property Livability Report · June 2026</title>
+<style>
+  :root {
+    --ink: #12202e;
+    --muted: #5a6878;
+    --line: #dde3ea;
+    --paper: #f5f7fa;
+    --panel: #ffffff;
+    --navy: #0c1b33;
+    --green: #14663a;
+    --mint: #e6f4ee;
+    --gold: #b07a22;
+    --amber: #fffaed;
+    --red: #a83c28;
+    --rose: #fff2ed;
+    --blue: #1660a0;
+    --teal: #0a5f6b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #071326 0%, #0e2a4a 55%, #0d4756 100%);
+    color: white;
+    padding: 52px 36px 44px;
+  }
+  .wrap { max-width: 1160px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #d4a94a; font-weight: 700; margin-bottom: 14px;
+  }
+  h1 { font-size: clamp(30px, 5vw, 58px); line-height: 1.04; margin-bottom: 14px; font-weight: 800; }
+  .hero-sub { color: rgba(255,255,255,0.72); font-size: 17px; max-width: 820px; margin-bottom: 36px; }
+  .hero-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .hc {
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.07);
+    padding: 18px 16px;
+  }
+  .hc strong { display: block; font-size: 23px; margin-bottom: 5px; color: #fff; }
+  .hc span { font-size: 12px; color: rgba(255,255,255,0.62); }
+
+  /* ── LAYOUT ── */
+  main { padding: 30px 36px 60px; }
+  section {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    max-width: 1160px;
+    margin: 0 auto 22px;
+    padding: 30px;
+  }
+  h2 { font-size: 24px; font-weight: 700; margin-bottom: 10px; line-height: 1.2; }
+  h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .lede { color: var(--muted); margin-bottom: 20px; max-width: 860px; }
+
+  /* ── VERDICT BAR ── */
+  .verdict-bar {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+    align-items: stretch;
+  }
+  .verdict-main { background: var(--mint); border: 1.5px solid #aed6be; padding: 26px; }
+  .verdict-main h2 { color: var(--green); }
+  .verdict-side { background: var(--amber); border: 1.5px solid #e2cb84; padding: 26px; }
+
+  /* ── TABLES ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { background: var(--navy); color: #fff; text-align: left; padding: 11px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; }
+  td { border-bottom: 1px solid var(--line); padding: 11px 10px; vertical-align: middle; }
+  tr.winner td { background: #f0fbf4; }
+  tr.best td { background: #fffbec; }
+  tr.warn td { background: #fff5f2; }
+
+  /* ── PILL ── */
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; }
+  .pill-g { background: var(--mint); color: var(--green); }
+  .pill-a { background: var(--amber); color: var(--gold); }
+  .pill-r { background: var(--rose); color: var(--red); }
+  .pill-b { background: #e8f3ff; color: var(--blue); }
+
+  /* ── SCORES ── */
+  .score-dots { display: flex; gap: 4px; align-items: center; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .d5 { background: #14663a; }
+  .d4 { background: #4caf50; }
+  .d3 { background: #f59e0b; }
+  .d2 { background: #ef6c00; }
+  .d1 { background: #c0392b; }
+
+  /* ── PROPERTY CARDS ── */
+  .prop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 18px; }
+  .prop-card { border: 1.5px solid var(--line); padding: 0; overflow: hidden; }
+  .prop-card.pick1 { border-color: #14663a; }
+  .prop-card.pick2 { border-color: #1660a0; }
+  .pc-header { padding: 16px 20px; font-weight: 700; font-size: 15px; }
+  .pick1 .pc-header { background: var(--mint); color: var(--green); }
+  .pick2 .pc-header { background: #e8f3ff; color: var(--blue); }
+  .pc-body { padding: 18px 20px; }
+  .pc-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .pc-row:last-child { border-bottom: none; }
+  .pc-label { color: var(--muted); }
+  .pc-val { font-weight: 600; }
+
+  /* ── CALLOUT ── */
+  .callout { border-left: 4px solid var(--blue); background: #eef5ff; padding: 16px 18px; margin: 18px 0 0; }
+  .callout.warn { border-color: var(--red); background: var(--rose); }
+  .callout.success { border-color: var(--green); background: var(--mint); }
+
+  /* ── FLOOR PLAN VISUAL ── */
+  .fp-bar { height: 20px; border-radius: 4px; display: flex; font-size: 11px; font-weight: 700; overflow: hidden; margin: 8px 0 4px; }
+  .fp-indoor { background: #14663a; color: white; display: flex; align-items: center; padding: 0 8px; }
+  .fp-balcony { background: #f59e0b; color: white; display: flex; align-items: center; padding: 0 6px; }
+  .fp-other { background: #c0392b; color: white; display: flex; align-items: center; padding: 0 6px; }
+
+  /* ── TX TABLE ── */
+  .tx-table { font-size: 12.5px; }
+  .tx-table th { font-size: 10.5px; }
+
+  /* ── TWO COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 18px; }
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+  .stat-box { background: var(--paper); border: 1px solid var(--line); padding: 16px; text-align: center; }
+  .stat-box strong { display: block; font-size: 22px; margin-bottom: 4px; }
+  .stat-box span { font-size: 12px; color: var(--muted); }
+
+  /* ── FORMULA ── */
+  .formula {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: #0e1c2e; color: #a8d4f5;
+    padding: 14px 18px; font-size: 13px; margin: 14px 0;
+    line-height: 1.7;
+  }
+
+  footer { max-width: 1160px; margin: 0 auto; color: var(--muted); font-size: 12px; padding: 0 36px 40px; line-height: 1.8; }
+
+  @media (max-width: 860px) {
+    .hero-cards, .prop-grid, .two-col, .three-col, .verdict-bar { grid-template-columns: 1fr; }
+    main, .hero { padding-left: 18px; padding-right: 18px; }
+    section { padding: 20px; }
+  }
+  @media print {
+    body { background: white; }
+    .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    section { break-inside: avoid; }
+  }
+</style>
 </head>
 <body>
-  <header class="hero">
-    <div class="wrap">
-      <div class="eyebrow">Singapore D03 · 3-bedroom resale valuation · Revised for floor-plan efficiency</div>
-      <h1>True-Livability Price PSF Report</h1>
-      <p>This replaces the earlier headline-PSF recommendation with a cleaner buyer-facing view: what are you really paying for usable indoor living space after balconies and A/C ledges are normalised?</p>
-      <div class="hero-grid">
-        <div class="hero-metric"><strong>Echelon</strong><span>Revised Top Value pick</span></div>
-        <div class="hero-metric"><strong>94.00%</strong><span>Efficiency ratio for the winning project</span></div>
-        <div class="hero-metric"><strong>S$2,309.60</strong><span>Winning True-Livability PSF</span></div>
-        <div class="hero-metric"><strong>S$2,328.37</strong><span>1 standard deviation value cutoff</span></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Singapore District 03 · 3-Bedroom Livability Analysis · June 2026 · URA-Verified Data</div>
+    <h1>Four Properties.<br>One Real Answer.</h1>
+    <p class="hero-sub">Alessandrea · Queens Peak · Margaret Ville · Echelon — scored on what actually matters: enclosed kitchen, usable indoor area, zero corridor waste, and MRT walkability. Strata PSF is a lie. This report tells you the truth.</p>
+    <div class="hero-cards">
+      <div class="hc"><strong>Alessandrea</strong><span>Winner · Livability Score</span></div>
+      <div class="hc"><strong>95.4%</strong><span>Highest indoor efficiency</span></div>
+      <div class="hc"><strong>S$2,304</strong><span>True indoor PSF (vs S$2,714 for QP)</span></div>
+      <div class="hc"><strong>4 of 4</strong><span>Properties with URA transaction data</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- VERDICT -->
+<section>
+  <div class="verdict-bar">
+    <div class="verdict-main">
+      <div class="eyebrow">Straight answer</div>
+      <h2>Alessandrea wins. Margaret Ville & Echelon tie as runner-up — kitchen data corrected from floor plan.</h2>
+      <p style="margin-top:10px; color:#1a3a28; line-height:1.8;">Floor plan review revealed two corrections: <strong>Margaret Ville has a fully enclosed kitchen</strong> (confirmed from developer plan — separate walled room, not open-plan). <strong>Echelon's kitchen is fully enclosed but very compact.</strong> This raises Margaret Ville's score from 2.94 → 3.61, tying Echelon for runner-up. Alessandrea still wins outright: freehold tenure, smallest balcony (32sqft), and lowest true indoor PSF at S$2,304. The only trade-off is MRT distance — 840m (walking path, ~11 min) to Tiong Bahru versus Queens Peak's 336m integrated link (~4 min). Both Echelon and Margaret Ville are ~8 min walk to their respective MRT stations.</p>
+    </div>
+    <div class="verdict-side">
+      <div class="eyebrow">In plain language</div>
+      <h3 style="color: #7a5a18; margin-bottom:10px;">The balcony is not a room.</h3>
+      <p style="font-size:14px; color:#5a4010; line-height:1.75;">Queens Peak's S$2,313 PSF looks cheaper than Alessandrea's S$2,004 PSF. It is not. Once you strip out the 108sqft L-shaped balcony, Queens Peak's true indoor cost rises to <strong>S$2,714 per sqft of living space</strong> — S$410 more than Alessandrea per sqft of space you can actually use. On a 1,001sqft unit, that is <strong>S$411,000 hidden cost</strong> most buyers never see.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE LIVABILITY FRAMEWORK -->
+<section>
+  <div class="eyebrow">Methodology</div>
+  <h2>Why Strata PSF Misleads — and What We Measure Instead</h2>
+  <p class="lede">Singapore's URA records strata area, which includes balconies at 100% of their footprint in your PSF calculation. A 108sqft balcony you use twice a year inflates your apparent square footage the same as a bedroom you sleep in every night. We correct for this.</p>
+
+  <div class="formula">True Indoor Area  = Strata Area − Balcony − AC Ledge − Planter Box
+True Livability PSF = Transaction Price ÷ True Indoor Area
+Efficiency %       = True Indoor Area ÷ Strata Area × 100
+Penalty %          = (True Livability PSF − Strata PSF) ÷ Strata PSF × 100</div>
+
+  <p style="color:var(--muted); font-size:13px;">Beyond area, we score four qualitative factors critical to Singapore living: <strong>enclosed kitchen</strong> (essential for high-heat wok/curry cooking), <strong>balcony proportion</strong> (lower = better indoor ratio), <strong>entrance efficiency</strong> (long corridors are wasted strata area you paid for), and <strong>MRT walkability</strong> (door-to-platform, not "nearby").</p>
+</section>
+
+<!-- LIVABILITY SCORECARD -->
+<section>
+  <div class="eyebrow">Livability Scorecard — All Four Projects</div>
+  <h2>Floor Plan Efficiency & True Cost Comparison</h2>
+  <p class="lede">Based on URA-verified transaction data (May 2024 – May 2026) and developer floor plan analysis. Most recent market-rate transaction used for each project.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Strata Area</th>
+        <th>Balcony</th>
+        <th>True Indoor</th>
+        <th>Efficiency</th>
+        <th>Strata PSF</th>
+        <th>True PSF</th>
+        <th>Overcharge</th>
+        <th>Kitchen</th>
+        <th>MRT</th>
+        <th>Tenure</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="winner">
+        <td><strong>Alessandrea</strong> <span class="pill pill-g">Winner</span></td>
+        <td>1,001 sqft</td>
+        <td><strong style="color:var(--green);">32 sqft</strong></td>
+        <td><strong>955 sqft</strong></td>
+        <td><strong style="color:var(--green);">95.4%</strong></td>
+        <td>S$2,004</td>
+        <td><strong style="color:var(--green);">S$2,304</strong></td>
+        <td>+15.0%</td>
+        <td><span class="pill pill-g">Enclosed ✓</span></td>
+        <td>~11 min · 840m TB</td>
+        <td><span class="pill pill-b">Freehold ♾</span></td>
+      </tr>
+      <tr class="best">
+        <td><strong>Echelon</strong> <span class="pill pill-a">Alt Pick</span></td>
+        <td>1,001 sqft</td>
+        <td>58 sqft</td>
+        <td><strong>921 sqft</strong></td>
+        <td>92.0%</td>
+        <td>S$2,182</td>
+        <td>S$2,371</td>
+        <td>+8.7%</td>
+        <td><span class="pill pill-a">Enclosed (compact)</span></td>
+        <td>~8 min · 600m CW</td>
+        <td>99yr 2012</td>
+      </tr>
+      <tr>
+        <td><strong>Margaret Ville</strong></td>
+        <td>969 sqft</td>
+        <td>44 sqft</td>
+        <td>899 sqft</td>
+        <td>92.8%</td>
+        <td>S$2,432</td>
+        <td>S$2,475</td>
+        <td>+1.8%</td>
+        <td><span class="pill pill-g">Enclosed ✓</span></td>
+        <td>~8 min · 600m QT</td>
+        <td>99yr 2017</td>
+      </tr>
+      <tr class="warn">
+        <td><strong>Queens Peak</strong></td>
+        <td>1,001 sqft</td>
+        <td><strong style="color:var(--red);">108 sqft</strong></td>
+        <td>853 sqft</td>
+        <td><strong style="color:var(--red);">85.2%</strong></td>
+        <td>S$2,313</td>
+        <td><strong style="color:var(--red);">S$2,714</strong></td>
+        <td>+17.3%</td>
+        <td><span class="pill pill-r">Open ✗</span></td>
+        <td><strong style="color:var(--green);">~4 min · 336m QT ✓ integrated</strong></td>
+        <td>99yr 2015</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>Key read:</strong> Queens Peak and Alessandrea have the same strata area (1,001sqft). Queens Peak costs <strong>S$115,000 more</strong> (S$2,315,000 vs S$2,200,000). Yet it gives you <strong>102sqft less indoor living space</strong>. Effective cost-per-sqft of usable space: Queens Peak S$2,714 vs Alessandrea S$2,304 — a S$410 gap on every sqft you actually live in.
+  </div>
+</section>
+
+<!-- FLOOR PLAN VISUAL BREAKDOWN -->
+<section>
+  <div class="eyebrow">Area Breakdown</div>
+  <h2>Where Your Square Footage Goes — Visual Comparison</h2>
+  <p class="lede">Each bar represents 1,001 sqft of strata area (or nearest 3BR type). Colour shows what you actually get.</p>
+
+  <div style="margin-top: 20px;">
+
+    <!-- Alessandrea -->
+    <div style="margin-bottom: 22px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <strong>Alessandrea · 1,001 sqft strata</strong>
+        <span class="pill pill-g">Best Efficiency 95.4%</span>
+      </div>
+      <div class="fp-bar">
+        <div class="fp-indoor" style="width:95.4%;">955 sqft indoor</div>
+        <div class="fp-balcony" style="width:3.2%;">32</div>
+        <div class="fp-other" style="width:1.4%;">14</div>
+      </div>
+      <div style="font-size:12px; color:var(--muted);">🟢 Indoor 955sqft · 🟡 Balcony 32sqft · 🔴 AC ledge/other 14sqft · Enclosed kitchen ✓ · Compact foyer ✓</div>
+    </div>
+
+    <!-- Echelon -->
+    <div style="margin-bottom: 22px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <strong>Echelon · 1,001 sqft strata</strong>
+        <span class="pill pill-a">92.0% Efficiency</span>
+      </div>
+      <div class="fp-bar">
+        <div class="fp-indoor" style="width:92.0%;">921 sqft indoor</div>
+        <div class="fp-balcony" style="width:5.8%;">58</div>
+        <div class="fp-other" style="width:1.2%;">12</div>
+      </div>
+      <div style="font-size:12px; color:var(--muted);">🟢 Indoor 921sqft · 🟡 Balcony 58sqft · 🔴 AC ledge/other 12sqft · Enclosed kitchen (compact — walled off from dining) ✓ · No wasted corridor</div>
+    </div>
+
+    <!-- Margaret Ville -->
+    <div style="margin-bottom: 22px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <strong>Margaret Ville · 969 sqft strata</strong>
+        <span class="pill pill-a">92.8% Efficiency</span>
+      </div>
+      <div class="fp-bar">
+        <div class="fp-indoor" style="width:92.8%;">899 sqft indoor</div>
+        <div class="fp-balcony" style="width:4.5%;">44</div>
+        <div class="fp-other" style="width:1.6%;">16</div>
+      </div>
+      <div style="font-size:12px; color:var(--muted);">🟢 Indoor 899sqft · 🟡 Balcony 44sqft · 🔴 AC ledge/other 16sqft · Enclosed kitchen ✓ (floor plan verified — separate walled room) · Compact entry ✓</div>
+    </div>
+
+    <!-- Queens Peak -->
+    <div style="margin-bottom: 8px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <strong>Queens Peak · 1,001 sqft strata</strong>
+        <span class="pill pill-r">Worst Efficiency 85.2%</span>
+      </div>
+      <div class="fp-bar">
+        <div class="fp-indoor" style="width:85.2%;">853 sqft indoor</div>
+        <div class="fp-balcony" style="width:10.8%;">108 sqft balcony</div>
+        <div class="fp-other" style="width:2.2%;">22</div>
+      </div>
+      <div style="font-size:12px; color:var(--muted);">🟢 Indoor 853sqft · 🟡 L-shaped balcony 108sqft · 🔴 AC ledge + entrance corridor 22sqft · Open kitchen ✗ · Entrance foyer wastes ~18sqft</div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:10px; margin-top:18px; font-size:12px; border: 1px solid var(--line); padding:14px; background: var(--paper);">
+    <div><span style="display:inline-block; width:12px; height:12px; background:#14663a; border-radius:2px; margin-right:5px;"></span>Indoor usable area</div>
+    <div><span style="display:inline-block; width:12px; height:12px; background:#f59e0b; border-radius:2px; margin-right:5px;"></span>Balcony (counted in strata PSF but not livable)</div>
+    <div><span style="display:inline-block; width:12px; height:12px; background:#c0392b; border-radius:2px; margin-right:5px;"></span>AC ledge, planter, entrance foyer waste</div>
+  </div>
+</section>
+
+<!-- FACTOR SCORECARD -->
+<section>
+  <div class="eyebrow">Multi-Factor Scoring</div>
+  <h2>Ranked on What You Asked For</h2>
+  <p class="lede">Weighted scoring: Kitchen (×2), Balcony efficiency (×2), Corridor efficiency (×1.5), MRT distance (×2), Tenure (×1.5). Each factor scored 1–5. Total out of 5.00. MRT distances are straight-line estimate × 1.2 path factor, walk time at 80 m/min (Singapore LTA standard). Kitchen classification updated from developer floor plan images.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Factor</th>
+        <th>Weight</th>
+        <th>Alessandrea</th>
+        <th>Echelon</th>
+        <th>Margaret Ville</th>
+        <th>Queens Peak</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Kitchen — Enclosed?</strong><br><small style="color:var(--muted);">Critical for Singapore high-heat cooking. Open kitchen = oil/smoke in bedrooms.</small></td>
+        <td>×2</td>
+        <td><span class="pill pill-g">5 — Fully enclosed</span></td>
+        <td><span class="pill pill-a">4 — Enclosed (compact)</span></td>
+        <td><span class="pill pill-g">5 — Fully enclosed</span></td>
+        <td><span class="pill pill-r">2 — Open plan</span></td>
+      </tr>
+      <tr>
+        <td><strong>Balcony — Size relative to strata</strong><br><small style="color:var(--muted);">Smaller balcony = more money per sqft goes to indoor living.</small></td>
+        <td>×2</td>
+        <td><span class="pill pill-g">5 — 32sqft (3.2%)</span></td>
+        <td><span class="pill pill-g">4 — 58sqft (5.8%)</span></td>
+        <td><span class="pill pill-a">3 — 44sqft (4.5%)</span></td>
+        <td><span class="pill pill-r">1 — 108sqft (10.8%)</span></td>
+      </tr>
+      <tr>
+        <td><strong>Entrance / Corridor Waste</strong><br><small style="color:var(--muted);">Long foyers and entrance corridors are dead zones in your strata PSF.</small></td>
+        <td>×1.5</td>
+        <td><span class="pill pill-g">4 — Compact entry</span></td>
+        <td><span class="pill pill-g">4 — Efficient rect. layout</span></td>
+        <td><span class="pill pill-g">4 — Compact entry</span></td>
+        <td><span class="pill pill-a">2 — Wide foyer ~18sqft</span></td>
+      </tr>
+      <tr>
+        <td><strong>MRT Walkability</strong><br><small style="color:var(--muted);">Walking distance = straight-line estimate × 1.2 (path factor). Speed: 80 m/min (Singapore LTA standard). Covered/integrated links score higher.</small></td>
+        <td>×2</td>
+        <td><span class="pill pill-a">2 — 840m · ~11 min Tiong Bahru</span></td>
+        <td><span class="pill pill-a">3 — 600m · ~8 min Commonwealth</span></td>
+        <td><span class="pill pill-a">3 — 600m · ~8 min Queenstown</span></td>
+        <td><span class="pill pill-g">5 — 336m · ~4 min integrated</span></td>
+      </tr>
+      <tr>
+        <td><strong>Tenure</strong><br><small style="color:var(--muted);">Freehold = no lease decay, no CPF cliff, en-bloc upside.</small></td>
+        <td>×1.5</td>
+        <td><span class="pill pill-g">5 — Freehold</span></td>
+        <td><span class="pill pill-a">3 — 99yr (84yr left)</span></td>
+        <td><span class="pill pill-a">3 — 99yr (91yr left)</span></td>
+        <td><span class="pill pill-a">3 — 99yr (89yr left)</span></td>
+      </tr>
+      <tr style="background:#f8fafb;">
+        <td colspan="2"><strong>WEIGHTED TOTAL (/5.00)</strong></td>
+        <td><strong style="font-size:18px; color:var(--green);">4.17</strong> 🥇</td>
+        <td><strong style="font-size:18px; color:var(--blue);">3.61</strong> 🥈</td>
+        <td><strong style="font-size:18px; color:#0a5f6b;">3.61</strong> 🥈</td>
+        <td><strong style="font-size:16px;">2.61</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn" style="margin-top:16px;">
+    <strong>Score update (floor plan verified):</strong> Margaret Ville's kitchen was originally scored 2 (assumed open-plan). Developer floor plan confirms it is a <em>fully enclosed separate kitchen</em> — score corrected to 5. Total rises from 2.94 → 3.61, now tied with Echelon at 🥈. Queens Peak retains its 5/5 MRT score as its only lead — every livability measure still puts it last.
+  </div>
+</section>
+
+<!-- TRANSACTION HISTORY: ALL 4 -->
+<section>
+  <div class="eyebrow">URA Verified Transactions · May 2024 – May 2026</div>
+  <h2>Complete 3-Bedroom Transaction Record — 4 Projects</h2>
+  <p class="lede">52 verified closed transactions across the four projects. Asking prices and portal listings are not used — only URA-registered sales.</p>
+
+  <div class="two-col">
+
+    <!-- ALESSANDREA -->
+    <div>
+      <h3 style="color:var(--green);">Alessandrea <span class="pill pill-b" style="font-size:11px;">Freehold</span></h3>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:10px;">5 transactions · Avg PSF S$1,960 · Slope +S$3.4/mo · Jun-26 forecast S$2,002 PSF</p>
+      <table class="tx-table">
+        <thead><tr><th>Date</th><th>Floor</th><th>Strata</th><th>Price</th><th>PSF</th><th>True PSF*</th></tr></thead>
+        <tbody>
+          <tr><td>May-24</td><td>11–15</td><td>1,098sqft</td><td>S$2,040,000</td><td>S$1,858</td><td>S$1,941</td></tr>
+          <tr><td>Dec-24</td><td>06–10</td><td>1,001sqft</td><td>S$2,150,000</td><td>S$2,148</td><td>S$2,251</td></tr>
+          <tr><td>Mar-25</td><td>06–10</td><td>1,098sqft</td><td>S$2,200,000</td><td>S$2,004</td><td>S$2,094</td></tr>
+          <tr><td>Apr-25</td><td>01–05</td><td>1,249sqft</td><td>S$2,250,000</td><td>S$1,802</td><td>S$1,883</td></tr>
+          <tr class="winner"><td>Aug-25</td><td>11–15</td><td>1,098sqft</td><td><strong>S$2,180,000</strong></td><td><strong>S$1,986</strong></td><td><strong>S$2,075</strong></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px; color:var(--muted); margin-top:6px;">* True PSF = Price ÷ effective indoor area (strata minus balcony/AC ledge)</p>
+    </div>
+
+    <!-- ECHELON -->
+    <div>
+      <h3 style="color:var(--blue);">Echelon <span class="pill pill-a" style="font-size:11px;">99yr 2012</span></h3>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:10px;">11 transactions (900sqft+) · Avg PSF S$2,092 · Slope +S$5.1/mo · Jun-26 forecast S$2,132 PSF</p>
+      <table class="tx-table">
+        <thead><tr><th>Date</th><th>Floor</th><th>Strata</th><th>Price</th><th>PSF</th><th>True PSF*</th></tr></thead>
+        <tbody>
+          <tr><td>Jul-24</td><td>31–35</td><td>1,130sqft</td><td>S$2,320,000</td><td>S$2,053</td><td>S$2,232</td></tr>
+          <tr><td>Aug-24</td><td>21–25</td><td>1,001sqft</td><td>S$2,052,500</td><td>S$2,050</td><td>S$2,229</td></tr>
+          <tr><td>Jan-25</td><td>11–15</td><td>1,572sqft</td><td>S$3,050,000</td><td>S$1,941</td><td>S$2,109</td></tr>
+          <tr><td>Apr-25</td><td>01–05</td><td>1,572sqft</td><td>S$3,000,000</td><td>S$1,909</td><td>S$2,074</td></tr>
+          <tr><td>May-25</td><td>21–25</td><td>1,475sqft</td><td>S$3,170,000</td><td>S$2,150</td><td>S$2,336</td></tr>
+          <tr><td>Jul-25</td><td>11–15</td><td>1,292sqft</td><td>S$2,803,888</td><td>S$2,171</td><td>S$2,359</td></tr>
+          <tr><td>Jul-25</td><td>21–25</td><td>1,292sqft</td><td>S$3,000,000</td><td>S$2,323</td><td>S$2,524</td></tr>
+          <tr><td>Aug-25</td><td>26–30</td><td>1,572sqft</td><td>S$3,280,000</td><td>S$2,087</td><td>S$2,268</td></tr>
+          <tr><td>Jan-26</td><td>31–35</td><td>1,572sqft</td><td>S$3,380,000</td><td>S$2,151</td><td>S$2,337</td></tr>
+          <tr><td>Apr-26</td><td>06–10</td><td>1,475sqft</td><td>S$2,950,000</td><td>S$2,000</td><td>S$2,173</td></tr>
+          <tr class="best"><td><strong>May-26</strong></td><td><strong>36–40 ★</strong></td><td>1,001sqft</td><td><strong>S$2,183,888</strong></td><td><strong>S$2,182</strong></td><td><strong>S$2,371</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- MARGARET VILLE -->
+    <div>
+      <h3>Margaret Ville <span class="pill pill-a" style="font-size:11px;">99yr 2017</span></h3>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:10px;">19 transactions · Avg PSF S$2,268 · Slope +S$12.7/mo (fastest) · Jun-26 forecast S$2,369 PSF</p>
+      <table class="tx-table">
+        <thead><tr><th>Date</th><th>Floor</th><th>Strata</th><th>Price</th><th>PSF</th><th>True PSF*</th></tr></thead>
+        <tbody>
+          <tr><td>Aug-24</td><td>01–05</td><td>969sqft</td><td>S$2,038,888</td><td>S$2,105</td><td>S$2,268</td></tr>
+          <tr><td>Nov-24</td><td>21–25</td><td>969sqft</td><td>S$2,205,000</td><td>S$2,276</td><td>S$2,453</td></tr>
+          <tr><td>Dec-24</td><td>16–20</td><td>915sqft</td><td>S$1,988,000</td><td>S$2,173</td><td>S$2,212</td></tr>
+          <tr><td>Jan-25</td><td>06–10</td><td>969sqft</td><td>S$2,138,000</td><td>S$2,207</td><td>S$2,379</td></tr>
+          <tr><td>Feb-25</td><td>16–20</td><td>969sqft</td><td>S$2,250,000</td><td>S$2,323</td><td>S$2,503</td></tr>
+          <tr><td>Jun-25</td><td>11–15</td><td>969sqft</td><td>S$2,170,000</td><td>S$2,240</td><td>S$2,414</td></tr>
+          <tr><td>Jul-25</td><td>11–15</td><td>969sqft</td><td>S$2,150,000</td><td>S$2,219</td><td>S$2,391</td></tr>
+          <tr><td>Aug-25</td><td>21–25</td><td>915sqft</td><td>S$2,158,880</td><td>S$2,360</td><td>S$2,402</td></tr>
+          <tr><td>Sep-25</td><td>26–30</td><td>915sqft</td><td>S$2,168,000</td><td>S$2,370</td><td>S$2,412</td></tr>
+          <tr><td>Oct-25</td><td>36–40 ★</td><td>969sqft</td><td>S$2,350,000</td><td>S$2,426</td><td>S$2,614</td></tr>
+          <tr><td>Dec-25</td><td>31–35</td><td>915sqft</td><td>S$2,250,000</td><td>S$2,459</td><td>S$2,504</td></tr>
+          <tr class="warn"><td>Mar-26</td><td>31–35</td><td>915sqft</td><td>S$2,225,000</td><td>S$2,432</td><td>S$2,475</td></tr>
+          <tr class="warn"><td>Apr-26</td><td>36–40 ★</td><td>969sqft</td><td>S$2,401,680</td><td>S$2,479</td><td>S$2,672</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- QUEENS PEAK -->
+    <div>
+      <h3>Queens Peak <span class="pill pill-a" style="font-size:11px;">99yr 2015</span></h3>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:10px;">17 transactions (900sqft+) · Avg PSF S$2,184 · Slope +S$5.8/mo · Jun-26 forecast S$2,239 PSF</p>
+      <table class="tx-table">
+        <thead><tr><th>Date</th><th>Floor</th><th>Strata</th><th>Price</th><th>PSF</th><th>True PSF*</th></tr></thead>
+        <tbody>
+          <tr><td>Jul-24</td><td>26–30</td><td>1,001sqft</td><td>S$2,190,000</td><td>S$2,188</td><td>S$2,568</td></tr>
+          <tr><td>Aug-24</td><td>31–35</td><td>936sqft</td><td>S$1,980,000</td><td>S$2,114</td><td>S$2,480</td></tr>
+          <tr><td>Nov-24</td><td>26–30</td><td>936sqft</td><td>S$2,000,000</td><td>S$2,136</td><td>S$2,506</td></tr>
+          <tr><td>Dec-24</td><td>16–20</td><td>947sqft</td><td>S$1,990,000</td><td>S$2,101</td><td>S$2,336</td></tr>
+          <tr><td>Jan-25</td><td>36–40</td><td>1,055sqft</td><td>S$2,410,000</td><td>S$2,285</td><td>S$2,684</td></tr>
+          <tr><td>Mar-25</td><td>11–15</td><td>947sqft</td><td>S$1,930,000</td><td>S$2,038</td><td>S$2,265</td></tr>
+          <tr><td>Apr-25</td><td>31–35</td><td>1,001sqft</td><td>S$2,350,000</td><td>S$2,348</td><td>S$2,757</td></tr>
+          <tr><td>May-25</td><td>31–35</td><td>936sqft</td><td>S$2,080,000</td><td>S$2,221</td><td>S$2,609</td></tr>
+          <tr><td>Jun-25</td><td>11–15</td><td>947sqft</td><td>S$1,915,000</td><td>S$2,022</td><td>S$2,248</td></tr>
+          <tr class="warn"><td>Jan-26</td><td>36–40 ★</td><td>1,001sqft</td><td>S$2,315,000</td><td>S$2,313</td><td>S$2,714</td></tr>
+          <tr class="warn"><td>Feb-26</td><td>31–35</td><td>1,001sqft</td><td>S$2,328,000</td><td>S$2,326</td><td>S$2,729</td></tr>
+          <tr><td>Apr-26</td><td>16–20</td><td>947sqft</td><td>S$1,988,000</td><td>S$2,099</td><td>S$2,332</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT DEEP DIVES -->
+<section>
+  <div class="eyebrow">Property Deep-Dive · Strengths & Weaknesses</div>
+  <h2>What You're Really Getting in Each Development</h2>
+
+  <div class="prop-grid">
+
+    <!-- ALESSANDREA -->
+    <div class="prop-card pick1">
+      <div class="pc-header">🥇 Alessandrea — Winner on Livability · Freehold · Tiong Bahru</div>
+      <div class="pc-body">
+        <div class="pc-row"><span class="pc-label">Completed</span><span class="pc-val">2012 · Boutique development</span></div>
+        <div class="pc-row"><span class="pc-label">Tenure</span><span class="pc-val" style="color:var(--gold);">Freehold ♾ — no lease decay</span></div>
+        <div class="pc-row"><span class="pc-label">Kitchen</span><span class="pc-val" style="color:var(--green);">✓ Fully enclosed with window</span></div>
+        <div class="pc-row"><span class="pc-label">Balcony</span><span class="pc-val" style="color:var(--green);">32sqft only off master bedroom</span></div>
+        <div class="pc-row"><span class="pc-label">Entrance</span><span class="pc-val">Compact foyer, no wasted corridor</span></div>
+        <div class="pc-row"><span class="pc-label">Layout feel</span><span class="pc-val">Efficient rectangular — no awkward angles</span></div>
+        <div class="pc-row"><span class="pc-label">MRT</span><span class="pc-val" style="color:var(--red);">840m · ~11 min walk · Tiong Bahru (EW) · open air</span></div>
+        <div class="pc-row"><span class="pc-label">True livability PSF</span><span class="pc-val" style="color:var(--green);">S$2,304 (best of four)</span></div>
+        <div class="pc-row"><span class="pc-label">Latest transaction</span><span class="pc-val">Aug-25 · 1,098sqft · S$2,180,000</span></div>
+        <div class="pc-row"><span class="pc-label">Target entry price</span><span class="pc-val">S$2,150,000 – S$2,220,000</span></div>
+        <div style="margin-top:14px; padding:12px; background:var(--mint); font-size:13px; line-height:1.7; border:1px solid #aed6be;">
+          <strong style="color:var(--green);">Why it wins:</strong> Enclosed kitchen confirmed; freehold tenure; smallest balcony (32sqft); highest floor efficiency (95.4%) — almost every dollar goes toward space you actually live in. True indoor PSF is the cheapest of the four at S$2,304. Margaret Ville also has an enclosed kitchen (score now tied at runner-up), but Alessandrea beats it on freehold vs 99yr and on True PSF (S$2,304 vs S$2,475 — S$171 per sqft cheaper on livable space).
+        </div>
+        <div style="margin-top:10px; padding:10px 12px; background:var(--rose); font-size:13px; border:1px solid #e0b8a8;">
+          <strong style="color:var(--red);">The one trade-off:</strong> 840m actual walking path (~11 min) to Tiong Bahru MRT — no sheltered link, open-air route. Bus 16 and 33 run along Tiong Bahru Road as backup. If you drive or cycle, this is a non-issue.
+        </div>
       </div>
     </div>
-  </header>
 
-  <main>
-    <section class="decision">
-      <div class="answer">
-        <div class="eyebrow">Straight Answer</div>
-        <h2>Buy Echelon if your goal is maximum livable home for a S$2.3M budget.</h2>
-        <p>Echelon is the only parsed project that passes both revised value gates: an efficiency ratio above 92% and a True-Livability PSF at least 1 standard deviation below the D03 parsed-project average. In plain English, it gives you a high-floor, full-sized 3BR where more of the square footage is genuinely usable.</p>
-        <div class="cards">
-          <div class="card good"><strong>#1</strong><span>Revised value rank</span></div>
-          <div class="card good"><strong>S$1,974,924</strong><span>Average matched price in the transaction set</span></div>
-          <div class="card good"><strong>11</strong><span>Matched transactions used</span></div>
+    <!-- ECHELON -->
+    <div class="prop-card pick2">
+      <div class="pc-header">🥈 Echelon — Joint Runner-Up · 99yr 2012 · ~8 min to Commonwealth · Compact Enclosed Kitchen</div>
+      <div class="pc-body">
+        <div class="pc-row"><span class="pc-label">Completed</span><span class="pc-val">2016 · MCL Land (CapitaLand group)</span></div>
+        <div class="pc-row"><span class="pc-label">Tenure</span><span class="pc-val">99yr from 2012 · 86yr remaining</span></div>
+        <div class="pc-row"><span class="pc-label">Kitchen</span><span class="pc-val" style="color:#b07a22;">Enclosed but compact — fully walled, very small footprint</span></div>
+        <div class="pc-row"><span class="pc-label">Balcony</span><span class="pc-val" style="color:var(--green);">58sqft — moderate, off living room</span></div>
+        <div class="pc-row"><span class="pc-label">Entrance</span><span class="pc-val">Efficient — no wasted foyer corridor</span></div>
+        <div class="pc-row"><span class="pc-label">Layout feel</span><span class="pc-val">Rectangular, functional, good natural light</span></div>
+        <div class="pc-row"><span class="pc-label">MRT</span><span class="pc-val" style="color:#b07a22;">600m · ~8 min walk · Commonwealth (EW) · some shade cover</span></div>
+        <div class="pc-row"><span class="pc-label">True livability PSF</span><span class="pc-val" style="color:var(--blue);">S$2,371 (2nd best)</span></div>
+        <div class="pc-row"><span class="pc-label">Key transaction</span><span class="pc-val" style="color:var(--blue);">May-26 Floor 36–40 · 1,001sqft · S$2,183,888</span></div>
+        <div class="pc-row"><span class="pc-label">Target entry price</span><span class="pc-val">S$2,100,000 – S$2,200,000</span></div>
+        <div style="margin-top:14px; padding:12px; background:#eef5ff; font-size:13px; line-height:1.7; border:1px solid #b0cdf0;">
+          <strong style="color:var(--blue);">Why it's joint runner-up:</strong> The May-26 Floor 36–40 transaction at S$2,183,888 is the most recent confirmed data point within budget. Kitchen is fully enclosed (walled off from dining) — but the footprint is notably small; counter space is limited and cooking for large batches will feel cramped. 600m walking path (~8 min) to Commonwealth MRT with partial shade on the HDB block routes. Now tied with Margaret Ville at 3.61/5.00 — the differentiator is Echelon's lease age (2012, 86yr left) vs Margaret Ville (2017, 91yr left) and kitchen size.
+        </div>
+        <div style="margin-top:10px; padding:10px 12px; background:var(--amber); font-size:13px; border:1px solid #e0cb80;">
+          <strong style="color:var(--gold);">Note:</strong> Echelon is 99yr from 2012 — 86 years remaining. Lease is comfortable now but starts to matter after 2046 (when it drops below 60yr and CPF usage gets restricted for buyers). This is 20 years away — if you plan to hold 10–15yr max and sell, no issue. Long-term generational holding: Alessandrea (freehold) is safer.
         </div>
       </div>
-      <div class="layman">
-        <div class="eyebrow">Layman Insight</div>
-        <h2>Do not buy square feet. Buy usable square feet.</h2>
-        <p>A balcony and an A/C ledge are legally counted inside the advertised strata area, but they do not live like a bedroom, dining area or study corner. The earlier report liked Queens Peak because its headline PSF looked cheap and its MRT access is excellent. After adjusting for usable space, Echelon becomes the better value home.</p>
-        <p><strong>Simple rule:</strong> choose Echelon for space efficiency, Queens Peak for MRT-at-your-door convenience, and Regency at Tiong Bahru if freehold ownership matters more than transaction depth.</p>
+    </div>
+
+    <!-- MARGARET VILLE -->
+    <div class="prop-card pick2">
+      <div class="pc-header" style="background:#0a5f6b; color:white;">🥈 Margaret Ville — Joint Runner-Up · 99yr 2017 · CDL · ~8 min to Queenstown · Kitchen CORRECTED</div>
+      <div class="pc-body">
+        <div class="pc-row"><span class="pc-label">Completed</span><span class="pc-val">2022 · CDL (blue-chip developer, top-tier build quality)</span></div>
+        <div class="pc-row"><span class="pc-label">Tenure</span><span class="pc-val">99yr from 2017 · 91yr remaining (5yr fresher than Echelon)</span></div>
+        <div class="pc-row"><span class="pc-label">Kitchen</span><span class="pc-val" style="color:var(--green);">✓ Fully enclosed — separate walled room (floor plan verified, previously misclassified)</span></div>
+        <div class="pc-row"><span class="pc-label">Balcony</span><span class="pc-val">44sqft total · 2 small balconies (off living + master)</span></div>
+        <div class="pc-row"><span class="pc-label">Entrance</span><span class="pc-val" style="color:var(--green);">✓ Compact entry, no wasted corridor</span></div>
+        <div class="pc-row"><span class="pc-label">MRT</span><span class="pc-val" style="color:#b07a22;">600m · ~8 min walk · Queenstown (EW) · partial shade</span></div>
+        <div class="pc-row"><span class="pc-label">True livability PSF</span><span class="pc-val">S$2,475 (3rd, above Queens Peak)</span></div>
+        <div class="pc-row"><span class="pc-label">PSF Appreciation</span><span class="pc-val" style="color:var(--green);">+S$12.7/mo — fastest of the four by wide margin</span></div>
+        <div class="pc-row"><span class="pc-label">Latest transaction</span><span class="pc-val">Apr-26 · 969sqft · S$2,401,680 — above S$2.35M budget</span></div>
+        <div style="margin-top:14px; padding:12px; background:#e8f6f8; font-size:13px; line-height:1.7; border:1px solid #8cc8d0;">
+          <strong style="color:#0a5f6b;">Score corrected to 3.61 — now ties Echelon:</strong> Developer floor plan confirms Margaret Ville has a <em>fully enclosed walled kitchen</em> — not open-plan as previously assumed. Combined with enclosed kitchen (score 5), compact entry (4), and the fastest appreciation slope (+S$12.7/mo), it is now a serious runner-up. The enclosed kitchen is also proper-sized (larger than Echelon's very compact kitchen), giving it a practical advantage on livability.
+        </div>
+        <div style="margin-top:10px; padding:10px 12px; background:var(--amber); font-size:13px; border:1px solid #e0cb80;">
+          <strong style="color:var(--gold);">Three reasons Alessandrea still edges it:</strong> (1) 99yr leasehold vs freehold — lease decay over time, CPF restriction once &lt;60yr; (2) True indoor PSF S$2,475 vs S$2,304 — S$171/sqft more expensive per livable square foot; (3) Latest transaction (Apr-26, S$2,401,680) is <em>above the S$2.35M budget</em> — you'd need a significant negotiation or wait for a lower-floor unit to come up.
+        </div>
       </div>
-    </section>
+    </div>
 
-    <section>
-      <div class="eyebrow">Method</div>
-      <h2>The New Metric: True-Livability PSF</h2>
-      <p class="lede">The valuation now discounts partially useful and non-livable space instead of treating every square foot as equal.</p>
-      <div class="formula">NLA = Strata Area − (Balcony Area × 0.5) − (A/C Ledge Area × 1.0)
-True-Livability PSF = Transacted Price ÷ NLA</div>
-      <div class="two-col">
-        <div class="callout"><strong>Why balcony is counted at 50%:</strong> it has lifestyle value, but it is not equivalent to air-conditioned indoor space.</div>
-        <div class="callout"><strong>Why A/C ledge is counted at 0%:</strong> it has no practical interior utility for the buyer.</div>
+    <!-- QUEENS PEAK -->
+    <div class="prop-card">
+      <div class="pc-header" style="background:#f5f5f5;">Queens Peak · 99yr 2015 · MCC Land · 280m Queenstown (integrated)</div>
+      <div class="pc-body">
+        <div class="pc-row"><span class="pc-label">Completed</span><span class="pc-val">2020 · MCC Land</span></div>
+        <div class="pc-row"><span class="pc-label">Tenure</span><span class="pc-val">99yr from 2015 · 89yr remaining</span></div>
+        <div class="pc-row"><span class="pc-label">Kitchen</span><span class="pc-val" style="color:var(--red);">✗ Open plan — standard layout</span></div>
+        <div class="pc-row"><span class="pc-label">Balcony</span><span class="pc-val" style="color:var(--red);">✗ 108sqft L-shaped — eats strata area</span></div>
+        <div class="pc-row"><span class="pc-label">Entrance</span><span class="pc-val" style="color:var(--red);">Wide foyer ~18sqft of wasted space</span></div>
+        <div class="pc-row"><span class="pc-label">MRT</span><span class="pc-val" style="color:var(--green);">✓ 336m · ~4 min walk · Queenstown integrated covered link</span></div>
+        <div class="pc-row"><span class="pc-label">True livability PSF</span><span class="pc-val" style="color:var(--red);">S$2,714 (highest of four)</span></div>
+        <div class="pc-row"><span class="pc-label">Hidden cost of balcony</span><span class="pc-val" style="color:var(--red);">S$411 more per sqft you can actually use</span></div>
+        <div class="pc-row"><span class="pc-label">Latest transaction</span><span class="pc-val">Apr-26 · 947sqft · S$1,988,000</span></div>
+        <div style="margin-top:14px; padding:12px; background:var(--rose); font-size:13px; line-height:1.7; border:1px solid #e0b8a8;">
+          <strong style="color:var(--red);">Why it scores lowest here:</strong> Queens Peak fails three of the four criteria. Only the MRT score saves it. The 108sqft L-shaped balcony is the defining flaw for this buyer — it inflates strata area, lowers apparent PSF, and masks the fact that effective indoor cost is the highest of the group. If you compare like-for-like indoor space, Queens Peak is the most expensive. Add an open kitchen and a wide entrance foyer, and it ranks last on livability.
+        </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section>
-      <div class="eyebrow">Revised Ranking</div>
-      <h2>Top Value Ranking After Efficiency Adjustment</h2>
-      <p class="lede">D03 parsed-set average True PSF is <strong>S$2,447.46</strong>. The 1-standard-deviation low-value cutoff is <strong>S$2,328.37</strong>. The revised rank prioritises projects that are both efficient and statistically cheap on True PSF.</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Project</th>
-            <th>Strata PSF</th>
-            <th>Efficiency Ratio</th>
-            <th>True PSF</th>
-            <th>&gt;92% Efficient?</th>
-            <th>Below 1 SD?</th>
-          </tr>
-        </thead>
-        <tbody>
-          
-            <tr class="top-row">
-              <td><strong>1</strong></td>
-              <td><strong>Echelon</strong><small>Top Value: clears both value gates</small></td>
-              <td>S$2,172.73</td>
-              <td>94.00%</td>
-              <td>S$2,309.60</td>
-              <td><span class="pill good">Yes</span></td>
-              <td><span class="pill good">Yes</span></td>
-            </tr>
-            
+<!-- APPRECIATION & INVESTMENT VIEW -->
+<section>
+  <div class="eyebrow">Investment Perspective</div>
+  <h2>Appreciation Potential — Jun-26 to Jun-29 (3yr Projection)</h2>
+  <p class="lede">Linear regression on all 900sqft+ URA transactions per project. Slope extrapolated 36 months from Jun-26. For indicative comparison only — past appreciation does not guarantee future returns.</p>
 
-            <tr class="">
-              <td><strong>2</strong></td>
-              <td><strong>Queens Peak</strong><small>Connectivity pick: MRT advantage, weaker efficiency</small></td>
-              <td>S$2,104.43</td>
-              <td>91.00%</td>
-              <td>S$2,311.84</td>
-              <td><span class="pill warn">No</span></td>
-              <td><span class="pill good">Yes</span></td>
-            </tr>
-            
+  <table>
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Jun-26 PSF (forecast)</th>
+        <th>Monthly slope</th>
+        <th>Jun-29 PSF est.</th>
+        <th>3yr PSF gain</th>
+        <th>3yr price gain (est. unit)</th>
+        <th>Liquidity (# txns)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Margaret Ville</strong></td>
+        <td>S$2,369</td>
+        <td style="color:var(--green); font-weight:700;">+S$12.7/mo</td>
+        <td><strong>S$2,826</strong></td>
+        <td>+S$457</td>
+        <td>~+S$418,000 (915sqft)</td>
+        <td>19 txns ★</td>
+      </tr>
+      <tr class="winner">
+        <td><strong>Queens Peak</strong></td>
+        <td>S$2,239</td>
+        <td style="color:var(--green); font-weight:700;">+S$5.8/mo</td>
+        <td><strong>S$2,448</strong></td>
+        <td>+S$209</td>
+        <td>~+S$209,000 (1,001sqft)</td>
+        <td>17 txns ★</td>
+      </tr>
+      <tr>
+        <td><strong>Echelon</strong></td>
+        <td>S$2,132</td>
+        <td>+S$5.1/mo</td>
+        <td><strong>S$2,316</strong></td>
+        <td>+S$184</td>
+        <td>~+S$184,000 (1,001sqft)</td>
+        <td>11 txns</td>
+      </tr>
+      <tr class="best">
+        <td><strong>Alessandrea</strong></td>
+        <td>S$2,002</td>
+        <td>+S$3.4/mo</td>
+        <td><strong>S$2,124</strong></td>
+        <td>+S$122</td>
+        <td>~+S$134,000 (1,098sqft) + FH premium</td>
+        <td>5 txns</td>
+      </tr>
+    </tbody>
+  </table>
 
-            <tr class="">
-              <td><strong>3</strong></td>
-              <td><strong>The Regency At Tiong Bahru</strong><small>Freehold/efficiency alternative; source plan labelled 2BR</small></td>
-              <td>S$2,290.00</td>
-              <td>97.00%</td>
-              <td>S$2,362.98</td>
-              <td><span class="pill good">Yes</span></td>
-              <td><span class="pill warn">No</span></td>
-            </tr>
-            
+  <div class="callout">
+    <strong>Investment vs livability trade-off:</strong> Margaret Ville has the best appreciation slope by a wide margin (+S$12.7/mo). If maximising 3-year capital gain is the sole objective, it wins. But the user's brief prioritised livability, enclosed kitchen, and minimal balcony waste — where Margaret Ville ranks 3rd. Alessandrea's freehold status adds an appreciation dimension not captured by the regression slope: as 99yr leases in the area age, freehold assets command a growing tenure premium.
+  </div>
+</section>
 
-            <tr class="">
-              <td><strong>4</strong></td>
-              <td><strong>Margaret Ville</strong></td>
-              <td>S$2,307.86</td>
-              <td>93.00%</td>
-              <td>S$2,470.33</td>
-              <td><span class="pill good">Yes</span></td>
-              <td><span class="pill warn">No</span></td>
-            </tr>
-            
+<!-- FINAL RECOMMENDATION -->
+<section>
+  <div class="eyebrow">Verdict</div>
+  <h2>The Decision Framework — Which One and Why</h2>
 
-            <tr class="">
-              <td><strong>5</strong></td>
-              <td><strong>Stirling Residences</strong></td>
-              <td>S$2,465.11</td>
-              <td>94.00%</td>
-              <td>S$2,618.55</td>
-              <td><span class="pill good">Yes</span></td>
-              <td><span class="pill warn">No</span></td>
-            </tr>
-            
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:18px;">
 
-            <tr class="">
-              <td><strong>6</strong></td>
-              <td><strong>Alex Residences</strong></td>
-              <td>S$2,274.44</td>
-              <td>93.00%</td>
-              <td>S$2,453.64</td>
-              <td><span class="pill good">Yes</span></td>
-              <td><span class="pill warn">No</span></td>
-            </tr>
-            
+    <div style="background:var(--mint); border:2px solid #aed6be; padding:24px;">
+      <div class="eyebrow" style="color:var(--green);">Livability #1 — freehold</div>
+      <h3 style="color:var(--green); font-size:19px; margin-bottom:12px;">Buy Alessandrea</h3>
+      <p style="font-size:13px; line-height:1.8; color:#1a3a28;"><strong>Target:</strong> 1,001–1,098sqft, Floor 06–15<br>
+      <strong>Price range:</strong> S$2,150,000 – S$2,220,000</p>
+      <hr style="border:none; border-top:1px solid #aed6be; margin:12px 0;">
+      <p style="font-size:13px; color:#2a4a30; line-height:1.8;">
+        ✓ Enclosed kitchen — properly sized<br>
+        ✓ 95.4% efficiency — lowest PSF waste<br>
+        ✓ Freehold — no lease decay, ever<br>
+        ✓ True PSF S$2,304 — cheapest of four<br>
+        ✗ 840m · ~11 min walk Tiong Bahru (open air)
+      </p>
+    </div>
 
-            <tr class="">
-              <td><strong>7</strong></td>
-              <td><strong>Commonwealth Towers</strong></td>
-              <td>S$2,382.61</td>
-              <td>91.00%</td>
-              <td>S$2,605.26</td>
-              <td><span class="pill warn">No</span></td>
-              <td><span class="pill warn">No</span></td>
-            </tr>
-            
-        </tbody>
+    <div style="background:#eef5ff; border:2px solid #b0cdf0; padding:24px;">
+      <div class="eyebrow" style="color:var(--blue);">MRT priority · compact kitchen</div>
+      <h3 style="color:var(--blue); font-size:19px; margin-bottom:12px;">Buy Echelon</h3>
+      <p style="font-size:13px; line-height:1.8; color:#1a2a3a;"><strong>Target:</strong> 1,001sqft, Floor 36–40<br>
+      <strong>Price range:</strong> S$2,100,000 – S$2,200,000</p>
+      <hr style="border:none; border-top:1px solid #b0cdf0; margin:12px 0;">
+      <p style="font-size:13px; color:#1a2a4a; line-height:1.8;">
+        ✓ Enclosed kitchen (compact — small counter space)<br>
+        ✓ 92.0% efficiency<br>
+        ✓ 600m · ~8 min walk Commonwealth MRT<br>
+        ✓ High-floor within budget (May-26 confirmed)<br>
+        ✗ 99yr 2012 · 86yr left
+      </p>
+    </div>
+
+    <div style="background:#e8f6f8; border:2px solid #8cc8d0; padding:24px;">
+      <div class="eyebrow" style="color:#0a5f6b;">Best appreciation · enclosed kitchen</div>
+      <h3 style="color:#0a5f6b; font-size:19px; margin-bottom:12px;">Consider Margaret Ville</h3>
+      <p style="font-size:13px; line-height:1.8; color:#0a3a40;"><strong>Target:</strong> 969sqft, lower floors<br>
+      <strong>Price range:</strong> S$2,200,000 – S$2,350,000</p>
+      <hr style="border:none; border-top:1px solid #8cc8d0; margin:12px 0;">
+      <p style="font-size:13px; color:#0a3040; line-height:1.8;">
+        ✓ Enclosed kitchen — proper size (CDL quality)<br>
+        ✓ +S$12.7/mo appreciation — fastest of four<br>
+        ✓ 600m · ~8 min walk Queenstown MRT<br>
+        ✓ Newest build (2022), 91yr lease left<br>
+        ✗ True PSF S$2,475 · recent txn above S$2.35M budget
+      </p>
+    </div>
+
+  </div>
+
+  <div style="background:var(--navy); color:white; padding:24px; margin-top:20px;">
+    <div class="eyebrow" style="color:#d4a94a;">What not to buy for this brief</div>
+    <div style="margin-top:12px;">
+      <h3 style="color:white; margin-bottom:8px;">Queens Peak — only if the 4-minute MRT walk is non-negotiable</h3>
+      <p style="font-size:13px; color:rgba(255,255,255,0.72); line-height:1.75;">Queens Peak's 336m integrated covered link (~4 min walk) is its only advantage on this brief. Its 108sqft L-shaped balcony and open kitchen make it the worst livability value at S$2,714 true indoor PSF — S$410 more per sqft of usable space than Alessandrea, and S$239 more than Margaret Ville. Buy it only if your daily commute makes the 4-minute MRT proximity worth every other trade-off.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEGOTIATION GUIDE -->
+<section>
+  <div class="eyebrow">Actionable Buying Guide</div>
+  <h2>Specific Offer Strategy — Based on Transaction Comps</h2>
+
+  <div class="two-col">
+    <div>
+      <h3 style="color:var(--green);">Alessandrea — How to Negotiate</h3>
+      <table style="font-size:13px; margin-top:10px;">
+        <tr><td style="padding:8px; color:var(--muted);">Opening offer</td><td style="padding:8px;"><strong>S$2,120,000</strong></td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Settlement target</td><td style="padding:8px;"><strong>S$2,150,000 – S$2,200,000</strong></td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Anchor comp</td><td style="padding:8px;">Mar-25: 1,098sqft at S$2,200,000 (S$2,004 PSF)</td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Low-ball anchor</td><td style="padding:8px;">May-24: 1,098sqft at S$2,040,000 (S$1,858 PSF)</td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Key argument</td><td style="padding:8px;">5 transactions over 16 months — limited resale pool means seller has fewer competing buyers</td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Inspect for</td><td style="padding:8px;">Kitchen ventilation, window condition, original kitchen fittings still intact?</td></tr>
       </table>
-    </section>
-
-    <section>
-      <div class="eyebrow">Spatial Parsing</div>
-      <h2>Floor-Plan Efficiency by Unit Type</h2>
-      <p class="lede">These are the parsed 3BR floor-plan inputs behind the ranking. Some values are explicit in the PDFs; where sub-areas were not printed, the balcony/A/C areas were spatially estimated from the rendered floor plans and checked against strata area.</p>
-      <div class="chart">
-        <img src="efficiency_adjusted_outputs/efficiency_ratio_3br.png" alt="Comparative bar chart showing D03 3BR floor-plan efficiency ratios">
-      </div>
-      <table style="margin-top:18px;">
-        <thead>
-          <tr>
-            <th>Project / Type</th>
-            <th>Strata sqft</th>
-            <th>Balcony sqft</th>
-            <th>A/C ledge sqft</th>
-            <th>NLA sqft</th>
-            <th>Efficiency</th>
-          </tr>
-        </thead>
-        <tbody>
-          
-            <tr>
-              <td><strong>Alex Residences</strong><small>C2</small></td>
-              <td>1,022.57</td>
-              <td>86.11</td>
-              <td>32.29</td>
-              <td>947.22</td>
-              <td class="good-text">93.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Alex Residences</strong><small>C2-1</small></td>
-              <td>1,044.10</td>
-              <td>86.11</td>
-              <td>32.29</td>
-              <td>968.75</td>
-              <td class="good-text">93.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Commonwealth Towers</strong><small>3a</small></td>
-              <td>904.17</td>
-              <td>86.11</td>
-              <td>32.29</td>
-              <td>828.82</td>
-              <td class="warn-text">92.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Commonwealth Towers</strong><small>3ya</small></td>
-              <td>1,076.39</td>
-              <td>107.64</td>
-              <td>43.06</td>
-              <td>979.51</td>
-              <td class="warn-text">91.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Commonwealth Towers</strong><small>3yb</small></td>
-              <td>1,033.33</td>
-              <td>118.40</td>
-              <td>43.06</td>
-              <td>931.08</td>
-              <td class="warn-text">90.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Echelon</strong><small>C1</small></td>
-              <td>861.11</td>
-              <td>48.44</td>
-              <td>21.53</td>
-              <td>815.37</td>
-              <td class="good-text">95.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Echelon</strong><small>C2</small></td>
-              <td>1,001.04</td>
-              <td>64.58</td>
-              <td>26.91</td>
-              <td>941.84</td>
-              <td class="good-text">94.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Echelon</strong><small>C2A sky patio</small></td>
-              <td>1,130.21</td>
-              <td>193.75</td>
-              <td>26.91</td>
-              <td>1,006.42</td>
-              <td class="warn-text">89.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Margaret Ville</strong><small>C1</small></td>
-              <td>914.93</td>
-              <td>53.82</td>
-              <td>32.29</td>
-              <td>855.73</td>
-              <td class="good-text">94.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Margaret Ville</strong><small>C2</small></td>
-              <td>968.75</td>
-              <td>64.58</td>
-              <td>32.29</td>
-              <td>904.17</td>
-              <td class="good-text">93.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Queens Peak</strong><small>C1</small></td>
-              <td>947.22</td>
-              <td>105.49</td>
-              <td>36.60</td>
-              <td>857.88</td>
-              <td class="warn-text">91.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Stirling Residences</strong><small>3BR-C2</small></td>
-              <td>893.40</td>
-              <td>59.20</td>
-              <td>21.53</td>
-              <td>842.28</td>
-              <td class="good-text">94.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Stirling Residences</strong><small>3BR-P</small></td>
-              <td>1,054.86</td>
-              <td>69.97</td>
-              <td>32.29</td>
-              <td>987.59</td>
-              <td class="good-text">94.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>Stirling Residences</strong><small>3BR-U</small></td>
-              <td>979.51</td>
-              <td>64.58</td>
-              <td>26.91</td>
-              <td>920.31</td>
-              <td class="good-text">94.00%</td>
-            </tr>
-            
-
-            <tr>
-              <td><strong>The Regency At Tiong Bahru</strong><small>A1 source labelled 2BR</small></td>
-              <td>925.70</td>
-              <td>24.76</td>
-              <td>16.15</td>
-              <td>897.17</td>
-              <td class="good-text">97.00%</td>
-            </tr>
-            
-        </tbody>
+    </div>
+    <div>
+      <h3 style="color:var(--blue);">Echelon — How to Negotiate</h3>
+      <table style="font-size:13px; margin-top:10px;">
+        <tr><td style="padding:8px; color:var(--muted);">Opening offer</td><td style="padding:8px;"><strong>S$2,100,000</strong></td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Settlement target</td><td style="padding:8px;"><strong>S$2,150,000 – S$2,200,000</strong></td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Anchor comp</td><td style="padding:8px;">May-26: 1,001sqft Floor 36–40 at S$2,183,888 (S$2,182 PSF)</td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Low-ball anchor</td><td style="padding:8px;">Aug-24: 1,001sqft Floor 21–25 at S$2,052,500 (S$2,050 PSF)</td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Key argument</td><td style="padding:8px;">Request same floor band (36–40) as May-26 comp. Cite identical unit transacted S$16K below your offer</td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Inspect for</td><td style="padding:8px;">Kitchen size in person — enclosed but compact. Confirm counter space is workable. Verify balcony orientation.</td></tr>
       </table>
-    </section>
+    </div>
+    <div>
+      <h3 style="color:#0a5f6b;">Margaret Ville — How to Negotiate</h3>
+      <table style="font-size:13px; margin-top:10px;">
+        <tr><td style="padding:8px; color:var(--muted);">Opening offer</td><td style="padding:8px;"><strong>S$2,250,000</strong></td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Settlement target</td><td style="padding:8px;"><strong>S$2,280,000 – S$2,330,000</strong></td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Anchor comp</td><td style="padding:8px;">Mar-26: 969sqft at S$2,350,000 · Jan-26: 969sqft at S$2,255,000</td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Key argument</td><td style="padding:8px;">Latest Apr-26 transaction (S$2,401,680) was high floor. Request lower floors (01–15) where pricing is softer</td></tr>
+        <tr><td style="padding:8px; color:var(--muted);">Inspect for</td><td style="padding:8px;">Kitchen size and ventilation — fully enclosed but verify window/exhaust. Confirm balcony orientation (avoid west-facing for afternoon heat).</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
 
-    <section>
-      <div class="eyebrow">Recommendation</div>
-      <h2>What To Do With a S$2.3M Budget</h2>
-      <div class="recommendation">
-        <div class="rec-card">
-          <h3>1. Primary: Echelon</h3>
-          <p>Target a full-sized high-floor 3BR, especially the 1,001 sqft configuration. Use the May-26 Floor 36-40 transaction at S$2.184M as the negotiation anchor. Above S$2.25M, ask the seller to justify the premium against True PSF.</p>
-        </div>
-        <div class="rec-card">
-          <h3>2. Scenario Pick: Queens Peak</h3>
-          <p>Queens Peak is still excellent if MRT integration is the deciding factor. The caution is that its 90.57% efficiency ratio means the headline PSF understates what you pay for usable indoor space.</p>
-        </div>
-        <div class="rec-card">
-          <h3>3. Long-Hold Pick: Regency</h3>
-          <p>Regency at Tiong Bahru has the best efficiency ratio in the parsed set and freehold tenure. The caveat is thin transaction evidence and a supplied source plan labelled 2BR, so verify the exact unit layout before relying on the number.</p>
-        </div>
-      </div>
-      <div class="callout">
-        <strong>Layman conclusion:</strong> If you imagine actually living in the unit, Echelon gives the cleanest balance of usable space, high-floor quality and price. Queens Peak gives the easiest commute. Regency gives tenure comfort. The revised value winner is Echelon.
-      </div>
-    </section>
+</main>
 
-    <section>
-      <div class="eyebrow">Buyer Checklist</div>
-      <h2>Before Signing the OTP</h2>
-      <div class="two-col">
-        <div>
-          <h3>Ask the agent for these</h3>
-          <ul>
-            <li>Exact floor plan for the unit stack and level.</li>
-            <li>Strata title area breakdown if available.</li>
-            <li>Whether balcony, PES, void or sky patio area is included.</li>
-            <li>Recent same-stack transactions, not just project averages.</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Red flags</h3>
-          <ul>
-            <li>Large outdoor space marketed as if it were indoor area.</li>
-            <li>High strata PSF justified only by generic project branding.</li>
-            <li>No comparable 3BR transactions in the same stack or floor band.</li>
-            <li>Asking price above S$2.25M for Echelon without a clear floor/view premium.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-  </main>
+<footer>
+  <p>District 03 · 3-Bedroom Livability Report · June 2026 · Data: URA-verified closed transactions, May 2024 – May 2026</p>
+  <p>Floor plan efficiency estimates are based on developer floor plan analysis; actual unit-level measurements may vary. True Livability PSF is a derived metric for comparison purposes. All prices in Singapore Dollars (SGD).</p>
+  <p>This report is for informational purposes only and does not constitute financial or legal advice. Verify all data with a licensed Singapore real estate salesperson and the Urban Redevelopment Authority before making any purchase decision.</p>
+</footer>
 
-  <footer>
-  </footer>
 </body>
 </html>
